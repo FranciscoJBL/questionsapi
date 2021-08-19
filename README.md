@@ -8,6 +8,7 @@ For instalation, clone this repository, then install the dependencies.
 
 ```bash
 git clone https://github.com/FranciscoJBL/questionsapi
+cd questionsapi
 npm install
 ```
 
