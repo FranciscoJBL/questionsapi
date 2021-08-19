@@ -32,6 +32,8 @@ When connected, the api will send you a welcome message, and you can send back a
 curl http://yourlocalip:3001/add-question/TEXT/EXPECTATION/POSITION
 ```
 
+Alternatively, you can call the same url in you navigator. (or call it using a function such as fetch on get mode)
+
 ### The text, expectation and position must be sent the following format:
 
 TEXT: Your question text, espaces have to be replaced by "-" character.
