@@ -11,7 +11,7 @@ export const requestMessage = (position : number|null) : QuestionEntity|null => 
     // If a position as been sent, we look for the message at this position
     if (position !== null) {
         // If the position is invalid, we just return null
-        if (position > questions.length) {
+        if (position >= questions.length -1) {
             return null;
         }
 
