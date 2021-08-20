@@ -2,7 +2,8 @@
  * A user event representation.
  */
 export interface UserEvent {
-    accepted: boolean
+    position: number;
+    response: string;
 };
 
 export default UserEvent;
