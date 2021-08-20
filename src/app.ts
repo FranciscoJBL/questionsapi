@@ -36,7 +36,7 @@ const pool = new PoolHandler();
 /**
  * If there is not custom questions provided, the api will create sample ones for you.
  */
-if (questions.length === 1) {
+if (questions.length === 0) {
     createSampleMessages();
 }
 
