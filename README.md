@@ -42,6 +42,12 @@ EXPECTATION: you can choose one of the following: ```'bin'``` for yes or not que
 
 POSITION: Determines the order of the question on the pool, if none has been provided, the question will be placed at the end.
 
+### TODO:
+- Create message
+- Client data retrieve endpoint (By id?)
+- Custom response for binary questions (I want to be mad if someone don't like cats, and be kind otherwise)
+- Add more custom expectations, like email, phone, etc. We should validate the data format too.
+- Docker and coverage
 
 ## License
 [MIT](https://choosealicense.com/licenses/mit/)
