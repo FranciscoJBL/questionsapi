@@ -82,7 +82,7 @@ io.on("connection", (socket) => {
      */
     socket.on("message", (message: { value: string; }) => {
         let clientData = pool.getClientById(socket.id);
-        
+
         // If we found the client profile, manage the response and send another question
         if (clientData !== null) {
             manageResponse(clientData, message.value);
@@ -97,7 +97,7 @@ io.on("connection", (socket) => {
         } else {
             /**
              * This case should never happen, but by inference we need to be aware of the case 
-             * when the getClientById return null
+             * when getClientById returns null
              */
             io.to(socket.id).emit(
                 'question', 
