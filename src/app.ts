@@ -4,18 +4,42 @@ import { Server } from 'socket.io';
 import ClientData from './Entity/ClientData';
 import PoolHandler from './Util/PoolHandler';
 import { manageResponse, requestMessage } from './Util/ResolutionHandler';
+import {questions, createSampleMessages} from './Assets/Messages';
 
+/**
+ * Create our base app.
+ */
 const app = express();
+
+/**
+ * Port definition.
+ */
 const port = 3001;
 
+/**
+ * Init the base route for add new messages.
+ */
 app.get('/add-question/:question/:expects/:position', function (req, res) {
     console.log(req.params);
-    res.send('POST request to the homepage');
-  });
+});
 
-
+/**
+ * Create our http server
+ */
 const httpServer = createServer(app);
+
+/**
+ * Create our pool handler.
+ */
 const pool = new PoolHandler();
+
+/**
+ * If there is not custom questions provided, the api will create sample ones for you.
+ */
+if (questions.length === 1) {
+    createSampleMessages();
+}
+
 /**
  * Set this as cross site origin measure
  */
@@ -44,7 +68,9 @@ io.on("connection", (socket) => {
         }
 
         pool.addNewClient(clientData);
-
+        /**
+         * Send the default welcome message
+         */
         io.to(socket.id).emit(
             'question', 
             requestMessage(null)
@@ -55,9 +81,9 @@ io.on("connection", (socket) => {
      * Manage incoming response from the client, with the selected option
      */
     socket.on("message", (message: { value: string; }) => {
-        console.log(message);
         let clientData = pool.getClientById(socket.id);
-
+        
+        // If we found the client profile, manage the response and send another question
         if (clientData !== null) {
             manageResponse(clientData, message.value);
             let currentUserPosition = clientData
@@ -69,6 +95,10 @@ io.on("connection", (socket) => {
                 requestMessage(currentUserPosition)
             );
         } else {
+            /**
+             * This case should never happen, but by inference we need to be aware of the case 
+             * when the getClientById return null
+             */
             io.to(socket.id).emit(
                 'question', 
                 'Why are you here?'
@@ -77,4 +107,7 @@ io.on("connection", (socket) => {
     });
 });
 
+/**
+ * Listen on the defined port.
+ */
 httpServer.listen(port);
